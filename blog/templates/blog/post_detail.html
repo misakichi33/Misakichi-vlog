@@ -1,0 +1,81 @@
+ {% extends "blog/base.html" %} {% block content %}
+ {% load widget_tweaks %}
+<h1 class="title">{{post.title}}</h1>
+<small>Posted at {{post.data_added}}</small>
+<p><strong>{{post.intro}}</strong></p>
+<p>{{post.body}}</p>
+
+<hr />
+
+<!-- コメントされたものを表示 -->
+<h2 class="subtitle">コメント</h2>
+
+{% for comment in post.comments.all%}
+<article class="media">
+  <div class="media-content">
+    <div class="content">
+      <p>
+        <strong>{{comment.name}}</strong> <small>{{comment.data_added}}</small>
+        <br />
+        {{comment.body}}
+      </p>
+    </div>
+  </div>
+</article>
+{% empty %}
+<div class="notification">
+  <p>まだコメントがありません。</p>
+</div>
+{% endfor %}
+
+<hr />
+
+<!-- コメント投稿エリア -->
+<h2 class="subtitle">コメントを追加</h2>
+
+<form action="." method="post">
+    {% csrf_token%} 
+    {{ form.as_p }}
+  
+    <div class="field">
+      <div class="control">
+        <button class="button is-danger">送信</button>
+      </div>
+    </div>
+</form>
+  {% endblock %}
+
+  <!-- <div class="field">
+    <label class="label">名前</label>
+    <div class="control">
+      <input class="input" type="text" placeholder="Text input" />
+    </div>
+  </div>
+
+  <div class="field">
+    <label class="label">メールアドレス</label>
+    <div class="control has-icons-right">
+      <input class="input" type="email" placeholder="Email input" />
+      <span class="icon is-small is-left">
+        <i class="fas fa-envelope"></i>
+      </span>
+      <span class="icon is-small is-right">
+        <i class="fas fa-exclamation-triangle"></i>
+      </span>
+    </div>
+  </div>
+
+  <div class="field">
+    <label class="label">本文</label>
+    <div class="control">
+      <textarea class="textarea" placeholder="Textarea"></textarea>
+    </div>
+  </div>
+
+  <div class="field is-grouped">
+    <div class="control">
+      <button class="button is-link" type="submit">送信</button>
+    </div>
+  </div>
+</form> -->
+</form>
